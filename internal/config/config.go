@@ -13,6 +13,10 @@ type Config struct {
 	CurrentUserName string `json:"current_user_name"`
 }
 
+type State struct {
+	Cfg *Config
+}
+
 func (c *Config) SetUser(user string) error {
 	c.CurrentUserName = user
 	jsonBytes, err := json.Marshal(c)
