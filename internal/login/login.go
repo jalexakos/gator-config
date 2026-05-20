@@ -1,6 +1,7 @@
 package login
 
 import (
+	"context"
 	"fmt"
 
 	command "github.com/jalexakos/gator-config/internal/command"
@@ -11,8 +12,14 @@ func HandlerLogin(s *config.State, cmd command.Command) error {
 	if len(cmd.Args) == 0 {
 		return fmt.Errorf("no username provided; please provide one")
 	}
-	user := cmd.Args[0]
-	if err := s.Cfg.SetUser(user); err != nil {
+	name := cmd.Args[0]
+
+	user, err := s.Db.GetUser(context.Background(), name)
+	if err != nil {
+		println("user not found: ", err.Error())
+		return err
+	}
+	if err := s.Cfg.SetUser(user.Name); err != nil {
 		return err
 	}
 

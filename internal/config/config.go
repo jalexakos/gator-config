@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+
+	"github.com/jalexakos/gator-config/internal/database"
 )
 
 const configFileName = ".gatorconfig.json"
@@ -14,6 +16,7 @@ type Config struct {
 }
 
 type State struct {
+	Db  *database.Queries
 	Cfg *Config
 }
 
