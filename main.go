@@ -10,6 +10,7 @@ import (
 	"github.com/jalexakos/gator-config/internal/database"
 	login "github.com/jalexakos/gator-config/internal/login"
 	"github.com/jalexakos/gator-config/internal/register"
+	"github.com/jalexakos/gator-config/internal/reset"
 
 	_ "github.com/lib/pq"
 )
@@ -36,6 +37,7 @@ func main() {
 	}
 	commands.Register("login", login.HandlerLogin)
 	commands.Register("register", register.HandlerRegister)
+	commands.Register("reset", reset.HandlerReset)
 	cmds := os.Args
 	if len(cmds) < 2 {
 		fmt.Errorf("Please provide a command")
