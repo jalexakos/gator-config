@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/jalexakos/gator-config/internal/agg"
 	command "github.com/jalexakos/gator-config/internal/command"
 	config "github.com/jalexakos/gator-config/internal/config"
 	"github.com/jalexakos/gator-config/internal/database"
@@ -40,6 +41,7 @@ func main() {
 	commands.Register("register", register.HandlerRegister)
 	commands.Register("reset", reset.HandlerReset)
 	commands.Register("users", users.HandlerUsers)
+	commands.Register("agg", agg.HandlerAgg)
 	cmds := os.Args
 	if len(cmds) < 2 {
 		fmt.Errorf("Please provide a command")
