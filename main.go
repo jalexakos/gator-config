@@ -10,6 +10,7 @@ import (
 	command "github.com/jalexakos/gator-config/internal/command"
 	config "github.com/jalexakos/gator-config/internal/config"
 	"github.com/jalexakos/gator-config/internal/database"
+	"github.com/jalexakos/gator-config/internal/feeds"
 	login "github.com/jalexakos/gator-config/internal/login"
 	"github.com/jalexakos/gator-config/internal/register"
 	"github.com/jalexakos/gator-config/internal/reset"
@@ -44,6 +45,7 @@ func main() {
 	commands.Register("users", users.HandlerUsers)
 	commands.Register("agg", agg.HandlerAgg)
 	commands.Register("addfeed", addfeed.HandlerAddFeed)
+	commands.Register("feeds", feeds.HandlerFeeds)
 	cmds := os.Args
 	if len(cmds) < 2 {
 		fmt.Errorf("Please provide a command")
