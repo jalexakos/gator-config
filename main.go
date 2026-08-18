@@ -11,6 +11,8 @@ import (
 	config "github.com/jalexakos/gator-config/internal/config"
 	"github.com/jalexakos/gator-config/internal/database"
 	"github.com/jalexakos/gator-config/internal/feeds"
+	"github.com/jalexakos/gator-config/internal/follow"
+	"github.com/jalexakos/gator-config/internal/following"
 	login "github.com/jalexakos/gator-config/internal/login"
 	"github.com/jalexakos/gator-config/internal/register"
 	"github.com/jalexakos/gator-config/internal/reset"
@@ -46,6 +48,8 @@ func main() {
 	commands.Register("agg", agg.HandlerAgg)
 	commands.Register("addfeed", addfeed.HandlerAddFeed)
 	commands.Register("feeds", feeds.HandlerFeeds)
+	commands.Register("follow", follow.HandlerFollow)
+	commands.Register("following", following.HandlerFollowing)
 	cmds := os.Args
 	if len(cmds) < 2 {
 		fmt.Errorf("Please provide a command")

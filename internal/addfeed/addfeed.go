@@ -41,6 +41,20 @@ func HandlerAddFeed(s *config.State, cmd command.Command) error {
 		return err
 	}
 
+	feedFollowParams := database.CreateFeedFollowParams{
+		ID:        uuid.New(),
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+		UserID:    user.ID,
+		FeedID:    feed.ID,
+	}
+
+	_, err = s.Db.CreateFeedFollow(context.Background(), feedFollowParams)
+
+	if err != nil {
+		return err
+	}
+
 	fmt.Println("feed added:", feed.ID, feed.CreatedAt, feed.UpdatedAt, feed.Name, feed.Url, feed.UserID)
 
 	return nil
