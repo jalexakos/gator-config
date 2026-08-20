@@ -12,19 +12,12 @@ import (
 	"github.com/jalexakos/gator-config/internal/database"
 )
 
-func HandlerAddFeed(s *config.State, cmd command.Command) error {
+func HandlerAddFeed(s *config.State, cmd command.Command, user database.User) error {
 	if len(cmd.Args) < 2 {
 		return fmt.Errorf("no feed name or URL provided; please provide one")
 	}
 	feedName := cmd.Args[0]
 	url := cmd.Args[1]
-
-	userName := s.Cfg.CurrentUserName
-
-	user, err := s.Db.GetUser(context.Background(), userName)
-	if err != nil {
-		return err
-	}
 
 	feedParams := database.CreateFeedParams{
 		ID:        uuid.New(),

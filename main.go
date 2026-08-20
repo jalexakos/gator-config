@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"os"
@@ -46,13 +47,13 @@ func main() {
 	commands.Register("reset", reset.HandlerReset)
 	commands.Register("users", users.HandlerUsers)
 	commands.Register("agg", agg.HandlerAgg)
-	commands.Register("addfeed", addfeed.HandlerAddFeed)
+	commands.Register("addfeed", middlewareLoggedIn(addfeed.HandlerAddFeed))
 	commands.Register("feeds", feeds.HandlerFeeds)
-	commands.Register("follow", follow.HandlerFollow)
-	commands.Register("following", following.HandlerFollowing)
+	commands.Register("follow", middlewareLoggedIn(follow.HandlerFollow))
+	commands.Register("following", middlewareLoggedIn(following.HandlerFollowing))
 	cmds := os.Args
 	if len(cmds) < 2 {
-		fmt.Errorf("Please provide a command")
+		fmt.Println("Please provide a command")
 		os.Exit(1)
 	}
 	cmdName := cmds[1]
@@ -65,5 +66,16 @@ func main() {
 	if err != nil {
 		fmt.Println("Error running command:", err)
 		os.Exit(1)
+	}
+}
+
+func middlewareLoggedIn(handler func(s *config.State, cmd command.Command, user database.User) error) func(*config.State, command.Command) error {
+	return func(s *config.State, cmd command.Command) error {
+		user, err := s.Db.GetUser(context.Background(), s.Cfg.CurrentUserName)
+		if err != nil {
+			return err
+		}
+
+		return handler(s, cmd, user)
 	}
 }

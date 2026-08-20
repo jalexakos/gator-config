@@ -6,16 +6,10 @@ import (
 
 	"github.com/jalexakos/gator-config/internal/command"
 	"github.com/jalexakos/gator-config/internal/config"
+	"github.com/jalexakos/gator-config/internal/database"
 )
 
-func HandlerFollowing(s *config.State, cmd command.Command) error {
-
-	userName := s.Cfg.CurrentUserName
-
-	user, err := s.Db.GetUser(context.Background(), userName)
-	if err != nil {
-		return err
-	}
+func HandlerFollowing(s *config.State, cmd command.Command, user database.User) error {
 
 	feeds, err := s.Db.GetFeedFollowsForUser(context.Background(), user.ID)
 

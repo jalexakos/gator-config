@@ -12,18 +12,11 @@ import (
 	"github.com/jalexakos/gator-config/internal/database"
 )
 
-func HandlerFollow(s *config.State, cmd command.Command) error {
+func HandlerFollow(s *config.State, cmd command.Command, user database.User) error {
 	if len(cmd.Args) < 1 {
 		return fmt.Errorf("no URL provided; please provide URL to follow")
 	}
 	url := cmd.Args[0]
-
-	userName := s.Cfg.CurrentUserName
-
-	user, err := s.Db.GetUser(context.Background(), userName)
-	if err != nil {
-		return err
-	}
 
 	feed, err := s.Db.GetFeedByURL(context.Background(), url)
 
