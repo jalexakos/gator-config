@@ -17,6 +17,7 @@ import (
 	login "github.com/jalexakos/gator-config/internal/login"
 	"github.com/jalexakos/gator-config/internal/register"
 	"github.com/jalexakos/gator-config/internal/reset"
+	"github.com/jalexakos/gator-config/internal/unfollow"
 	"github.com/jalexakos/gator-config/users"
 
 	_ "github.com/lib/pq"
@@ -51,6 +52,7 @@ func main() {
 	commands.Register("feeds", feeds.HandlerFeeds)
 	commands.Register("follow", middlewareLoggedIn(follow.HandlerFollow))
 	commands.Register("following", middlewareLoggedIn(following.HandlerFollowing))
+	commands.Register("unfollow", middlewareLoggedIn(unfollow.HandlerUnfollow))
 	cmds := os.Args
 	if len(cmds) < 2 {
 		fmt.Println("Please provide a command")
